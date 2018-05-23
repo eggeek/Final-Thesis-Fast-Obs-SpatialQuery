@@ -1,0 +1,21 @@
+\KwResult{k-nearest neighbor}
+ init\_search()\;
+ find\_final\_nodes\_case1()\;
+ \While{heap not empty}{
+   node = heap.pop()\;
+  \eIf{node is final node}{
+    result.add(node)\;
+    \eIf{result.size is k} {
+      return resut\;
+    }{ continue\; }
+  }{
+    find\_find\_nodes\_case2()\;
+    successors = genSuccessors(node)\;
+    \ForEach{suc in successors} {
+      suc.gValue = node.gValue + dist(node.root, suc.root)\;
+      suc.hValue = dist\_to\_segment(suc.r, suc.I)\;
+      suc.fValue = suc.gValue + suc.hValue\;
+      heap.push(suc)\;
+    }
+  }
+}

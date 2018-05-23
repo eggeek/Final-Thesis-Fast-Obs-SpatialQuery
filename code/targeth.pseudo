@@ -1,0 +1,7 @@
+\KwResult{closest target to search node}
+$t_1$ = rtree.nearest\_neighbor(areaA, node.I.a)\;
+$t_2$ = rtree.nearest\_neighbor(areaB, node.I.b)\;
+$t_3$ = rtree.nearest\_neighbor(areaC, node.r)\;
+$t_4$ = rtree.nearest\_neighbor(areaC', node.r')\;
+result = target\_with\_minimal\_hValue($t_1, t_2, t_3, t_4$)\;
+return result\;

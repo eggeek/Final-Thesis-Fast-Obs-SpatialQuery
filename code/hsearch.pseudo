@@ -1,0 +1,36 @@
+\KwResult{k-nearest neighbor}
+init\_search()\;
+find\_final\_node\_case1()\;
+while{heap not empty}{
+  node = heap.pop()\;
+  \eIf{node is final node}{
+    result.add(node)\;
+    \eIf{result.size is k} {
+      return result\;
+    }{continue\;}
+  }{
+    \eIf{node.target has been found} {
+      node.target = get\_closest\_target(node)\;
+      node.hValue = get\_h\_value(node, node.target)\;
+      node.fValue = node.hValue + node.gValue;
+      heap.push(node);
+      continue;
+    }{
+      find\_final\_node\_case2()\;
+      successors = genSuccessors(node)\;
+      \ForEach{suc in successors} {
+        suc.gValue = node.gValue + dist(node.root, suc.root)\;
+        hValue = get\_h\_value(suc, node.target)\;
+        \eIf{fabs(hValue - node.hValue) $<= EPS$} {
+          suc.target = node.target\;
+          suc.hValue = hValue\;
+        } {
+          suc.target = get\_closest\_target(suc)\;
+          suc.hValue = get\_h\_value(suc, suc.target)\;
+        }
+        suc.fValue = suc.gValue + suc.hValue\;
+        heap.push(suc)\;
+      }
+    }
+  }
+}

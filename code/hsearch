@@ -1,0 +1,44 @@
+void target_heuristic_search() {
+  init_search();
+  final_node_case1();
+  while (!heap.empty()) {
+    node = heap.pop();
+    if (node is final node) {
+      results.push_back(node);
+      if (results.size() == k)
+        return
+    }
+    else {
+
+      // lazy reassign
+      if (node.target has been found) {
+        node.target = get_closest_target(node);
+        node.h_value = get_h_value(node, node.target);
+        node.f_value = node.h_value + node.g_value;
+        heap.push(node);
+        continue;
+      }
+
+      final_node_case2();
+
+      // generate successors
+      successors = gen_successors(node);
+      for (suc: successors) {
+        suc.g_value = node.g_value + dist_to_point(node.r, suc.r);
+        // lazy compute
+        double hvalue = get_h_value(suc, node.target);
+        if (fabs(hvalue - node.h_value) <= EPS) {
+          suc.target = node.target;
+          suc.h_value = hvalue;
+        }
+        else {
+          suc.target = get_closest_target(suc);
+          suc.h_value = get_h_value(suc, suc.target);
+        }
+        suc.f_value = suc.g + suc.h;
+        heap.push(suc);
+      }
+    }
+  }
+}
+

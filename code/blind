@@ -1,0 +1,46 @@
+void final_node_case1() {
+  targets = get_targets(start_poly_id);
+  for (t: targets) {
+    final = generate_final_node(t);
+    final.h_value = dist_to_point(start, t);
+    final.g_value = 0;
+    final.f_value = final.h_value + final.g_value;
+    heap.push(final);
+  }
+}
+
+void final_node_case2(SearchNode node) {
+  targets = get_targets(next_polyid);
+  for (t: targets) {
+    final = generate_final_node(node);
+    final.h_value = h_value(node.I, node.r, t);
+    final.g_value = node.g_value;
+    final.f_value = final.h_value + final.g_value;
+    heap.push(final);
+  }
+}
+
+void interval_heuristic_search() {
+  init_search();
+  final_node_case1();
+  while (!heap.empty()) {
+    node = heap.pop();
+    if (node is final node) {
+      results.push_back(node);
+      if (results.size() == k)
+        return
+    }
+    else {
+      final_node_case2(node);
+      // generate successors
+      successors = gen_successors(node);
+      for (suc: successors) {
+        suc.g_value = node.g_value + dist_to_point(node.r, suc.r);
+        suc.h_value = dist_to_seg(suc.r, suc.I);
+        suc.f_value = suc.g + suc.h;
+        heap.push(suc);
+      }
+    }
+  }
+}
+

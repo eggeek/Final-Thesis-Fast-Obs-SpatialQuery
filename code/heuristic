@@ -1,0 +1,31 @@
+point hearest_neighbor(Area area, point p) {
+  // retrieval the nearest neighbor of p in area
+  priority_queue pq = priority_queue();
+  double dist = mindist(rtree.root.MBR, p);
+  pq.push({key=dist, value=rtree.root});
+  while (!pq.empty()) {
+    Entry cur = pq.top(); pq.pop();
+    if (cur.value is leaf) {
+      // find the nearest neighbor
+      return cur.value;
+    }
+    for (child in cur.value.children) {
+      if (child.MBR disjoint area)
+        continue;
+      dist = mindist(child.MBR, p);
+      pq.push({key=dist, value=child});
+    }
+  }
+  // no point in area
+  return null;
+}
+
+point get_closest_target(SearchNode node) {
+  point p1, p2, p3, p4, closest;
+  p1 = nearest_neighbor(areaA, a);
+  p2 = nearest_neighbor(areaB, b);
+  p3 = nearest_neighbor(areaC, r);
+  p4 = nearest_neighbor(areaC', r');
+  closest = best(p1, p2, p3, p4);
+  return closest;
+}

@@ -1,0 +1,7 @@
+time = 0
+node = 0
+for (target: targets) {
+  polyanya.run(start, target)
+  time += polyanya.search_time
+  node += polyanya.node_generated
+}

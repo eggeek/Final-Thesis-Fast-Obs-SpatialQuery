@@ -1,0 +1,15 @@
+We consider the k-Nearest Neighbour problem in a 
+two-dimensional Euclidean plane with obstacles (\emph{OkNN}).
+Existing and state of the art algorithms for OkNN are based on incremental 
+visibility graphs and as such suffer from a well known disadvantage: costly 
+and online visibility checking with quadratic worst-case running times.
+In this work we develop a new OkNN algorithm which avoids these disadvantages
+by representing the traversable space as a collection of convex polygons; i.e.
+a Navigation Mesh. 
+We then adapt an recent and optimal navigation mesh algorithm, \textit{Polyanya}, from the
+single-source single-target setting to the the multi-target case. 
+We also give two new and online heuristics for OkNN.
+In a range of empirical comparisons we show that our approach can be orders of magnitude faster than competing methods that rely on visibility graphs.
+
+%\keywords{Obstacle Nearest Neighbor \and kNN \and Navigation Mesh \and Spatial Search \and
+%Obstacle Distance \and Obstacle Navigation}

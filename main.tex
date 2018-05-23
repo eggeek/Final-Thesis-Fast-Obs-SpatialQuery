@@ -1,0 +1,97 @@
+\documentclass[a4paper,pdflatex,11pt,mitminorthesis,singlespace,oneside]{cssethesis}
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+%%\usepackage[section]{placeins}
+\usepackage{booktabs}
+\usepackage{tabu}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+%% Sets page size and margins
+
+%% Useful packages
+%% Code 
+\usepackage{listings}
+
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{cite}
+
+%%Algorithm
+\usepackage{amsmath}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+
+
+%%Theorem
+\usepackage{amsthm}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{property}{Property}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\thesisauthor{Shizhe Zhao}
+\thesisauthorlastname{Zhao}
+\thesisdepartment{Caulfield School of Information Technology}
+%                  Clayton School of Information Technology is the default
+\thesisauthorstudentid{27505928} % Needed for litreview
+\thesisauthoremail{szha414\@@student.monash.edu} % Optional. Note that the @ is
+											 % given as \@@. This is not
+											 % necessary in normal LaTeX,
+											 % but it is if you use the
+											 % amsmath package - so why not
+											 % get into the habit?
+%\thesismonth{July} % Optional. Current month is used if this is not set
+%\thesisyear{2002} % Optional. Current year is used if this is not set
+\thesistitle{Fast Obstacle Spatial Query on Navigation Mesh}
+\thesissupervisor{Assoc. Prof. David Taniar}
+
+\begin{document}
+
+\frontmatter					% start the thesis front matter.
+\thesistitlepage				% Generate the title page.
+\thesiscopyrightpage			% Generate the copyright page.
+%\thesisdedicationpage			% Generate a dedication page (optional)
+\tableofcontents				% Generate a table of contents.
+%\listoftables					% Generate a list of tables (optional).
+%\listoffigures					% Generate a list of figures (optional).
+\pagebreak
+
+\begin{thesisabstract}			% generate the abstract page.
+\input{chapter/abstract}
+\end{thesisabstract}                 
+
+%\thesisdeclarationpage			% generate the declaration page (optional).
+%
+%\begin{thesisacknowledgments}	% generate the acknowledgements page (optional).
+%I would like to thank everyone who helped to make this possible. It has
+%been an incredible journey of self-discovery, and I love every last one of
+%you.
+%
+%I would like to thank my supervisor Dr David Taniar for the guidance and everyone in the Spatial study group. I can not finish it without all your valuable advise.
+%\end{thesisacknowledgments}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Main matter 
+%%
+\mainmatter						% start the thesis body.
+
+\input{chapter/introduction}
+\input{chapter/literature_review}
+\input{chapter/proposed_algorithms}
+\input{chapter/experiments}
+\input{chapter/conclusion}
+
+\pagebreak
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
