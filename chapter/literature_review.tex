@@ -93,6 +93,24 @@ multiplel times in retrieval progress, which duplicated efforts.
 So there is a variant doesn't allow overlapping in interior node, called $R^+\textit{-tree}$\cite{sellis1987r+}.
 
 \subsection{Nearest Neighbor Query}
+In the \textit{R-tree}, all nodes are organized by their spatial information,
+so that the nearest neighbor of a point can be retrieved by exploring tree nodes in some order.
+To introduce the algorithm, we need to discuss two metrics: given query point $q$ and the MBR of a tree node
+\begin{itemize}
+  \item \textit{\textbf{mindist}} is the minimal distance from $q$ to the MBR, it estimates the
+    distance from $q$ to inside object, so this metric is the priority of the tree node;
+  \item \textit{\textbf{minmaxdist}} is the uppber bound of the NN distance of any object inside
+    the MBR, if the $mindist$ of any MBR large than this value, then such MBR cannot contains
+    the nearest object, so this metric is for pruning.
+\end{itemize}
+The algorithm starts with root node and proceeds down the tree. When it visits a leaf node,
+current nearest neighbor will be updated;
+When it visits a non-leaf node, the children of such node is sorted by \textit{mindist}, and pruned by
+\textit{minmaxdist}; when algorithm finished, the updated nearest neighbor is the answer.  
+This kind of algorithm is also called \textit{branch-and-bound} traversal, which has been well
+studied and widely used in other artifical intelligence areas\cite{sellis1987r+},
+and existing NN queries based on it with different ordering and pruning strategies,
+more details are in \cite{roussopoulos1995nearest,cheung1998enhanced}.
 
 \section{Obstacle k-Nearest Neighbor}\label{lrknn}
 \section{Pathfinding on Navigation Mesh}\label{lrnav}
