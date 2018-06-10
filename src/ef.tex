@@ -1,0 +1,32 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=.7cm,y=.7cm]
+\newcommand{\degre}{\ensuremath{^\circ}}
+\definecolor{qqwuqq}{rgb}{0.,0.39215686274509803,0.}
+\definecolor{ududff}{rgb}{0.30196078431372547,0.30196078431372547,1.}
+\definecolor{ffqqqq}{rgb}{1.,0.,0.}
+\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+
+%\draw [color=cqcqcq,, xstep=2.0cm,ystep=2.0cm] (-2.5,-1.5) grid (11.1,5.5);
+\clip(-2.5,-1.5) rectangle (11.1,5.5);
+\draw [thick,color=qqwuqq,fill=qqwuqq,fill opacity=0.10000000149011612] (5.882794718512914,1.3724017604956955) -- (6.1103929580172185,2.0551964790086092) -- (5.427598239504305,2.282794718512914) -- (5.2,1.6) -- cycle; 
+\draw [thick,color=ffqqqq] (1.,3.)-- (10.,0.);
+\draw [thick,dash pattern=on 1pt off 3pt,domain=-2.5:11.1] plot(\x,{(-42.--9.*\x)/3.});
+\draw [thick] (-2.,0.)-- (1.,3.);
+\draw [thick] (1.,3.)-- (0.,4.);
+\draw [thick] (-2.,0.)-- (6.,4.);
+\draw [thick] (4.4,-0.8)-- (2.8,2.4);
+\begin{scriptsize}
+\draw [fill=ffqqqq] (1.,3.) circle (2.5pt);
+\draw[color=ffqqqq] (1.2251463573152723,3.6132615238618353) node {\large $a$};
+\draw [fill=ffqqqq] (10.,0.) circle (2.5pt);
+\draw[color=ffqqqq] (10.623297185327285,-0.2884978451684127) node {\large $b$};
+\draw [fill=ududff] (-2.,0.) circle (2.5pt);
+\draw[color=ududff] (-2.269472903642263,0.8989941367103583) node {\large $r$};
+\draw [fill=ffqqqq] (0.,4.) circle (2.5pt);
+\draw[color=ffqqqq] (-0.3864499038059212,5.190929442643631) node {\large $t_2$};
+\draw [fill=ffqqqq] (6.,4.) circle (2.5pt);
+\draw[color=ffqqqq] (5.347439951551588,5.021287730946663) node {\large $t_1$};
+\draw[color=qqwuqq] (6.585824446939453,1.9507727492315556) node {\large $\alpha = 90\textrm{\degre}$};
+\draw [fill=ffqqqq] (4.4,-0.8) circle (2.5pt);
+\draw[color=ffqqqq] (3.413524438206156,-0.3393903586775029) node {\large $t_3$};
+\end{scriptsize}
+\end{tikzpicture}
