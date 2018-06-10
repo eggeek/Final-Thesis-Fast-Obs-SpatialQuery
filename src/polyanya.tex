@@ -1,0 +1,156 @@
+%\coordinate (a) at (2, 6); 
+\coordinate (a) at (0, 7);
+\coordinate (b) at (8, 7); 
+\coordinate (c) at (6, 5); 
+\coordinate (d) at (1, 3);
+\coordinate (e) at (4, 3);
+\coordinate (f) at (4, 2);
+\coordinate (g) at (7, 4);
+\coordinate (h) at (7, 2);
+%\coordinate (i) at (9, 0);
+\coordinate (i) at (10, 0);
+\coordinate (j) at (5, 2);
+\coordinate (k) at (0, 7);
+\coordinate (l) at (0, 0);
+\coordinate (m) at (10, 0);
+\coordinate (n) at (10, 7);
+\coordinate (q) at (3, 4);
+\coordinate (Q) at (3, 4);
+\coordinate (t) at (9, 3);
+\coordinate (o) at (7.5, 5.5);
+
+\newcommand{\nodelabel}[2] {
+    \node[fill,circle,scale=0.25,label=#2:$#1$,color=red] at (#1) {$#1$};
+}
+
+\newcommand{\medge}[2]{
+    \draw[gray,thick] (#1)--(#2);
+}
+
+\newcommand{\vgedge}[2]{
+    \draw[black,thick] (#1)--(#2);
+}
+
+\newcommand{\drawVs}{
+    %\nodelabel{a}{above}
+    \nodelabel{b}{below}
+    \nodelabel{c}{below}
+    
+    %\nodelabel{d}{left}
+    \nodelabel{e}{right}
+    \nodelabel{f}{below}
+    
+    \nodelabel{g}{above}
+    \nodelabel{h}{below}
+    %\nodelabel{i}{below}
+}
+
+\newcommand{\drawmeshs}{
+    \medge{a}{k},\medge{a}{d},\medge{a}{b},\medge{a}{c}
+    \medge{b}{c},
+    \medge{c}{g}
+    \medge{d}{f},\medge{d}{l},\medge{d}{e}
+    \medge{l}{f}
+    \medge{e}{c},\medge{e}{f}
+    \medge{f}{h}
+    \medge{g}{h},\medge{g}{b}
+    \medge{h}{i}
+}
+
+\newcommand{\drawobstacles}{
+    \fill[black] (a)--(b)--(c)--cycle;
+    \fill[black] (g)--(h)--(i)--cycle;
+    \fill[black] (d)--(e)--(f)--cycle;
+}
+
+\newcommand{\drawstart} {
+    % \fill[blue] (q) circle[radius=.5ex];
+    % \node[above] at (q) {$q$};
+    \node[fill,circle,scale=0.25,label=above:$q$,color=blue] at (q) {$q$};
+
+}
+
+\newcommand{\drawend}{
+    \fill[blue] (t) circle[radius=.5ex];
+    \node[above] at (t) {$t$};
+}
+
+\newcommand{\drawboundary}{
+    \draw[black, ultra thick] (k)--(n)--(m)--(l)--cycle;
+}
+
+\newcommand{\showvisible} {
+    \fill[lightgray] (c)--(e)--(d)--(a);
+    \nodelabel{e}{right}
+    \nodelabel{c}{below}
+    \drawstart;
+}
+
+\newcommand{\stepa} {
+    \fill[lightgray] (c)--(e)--(d)--(a);
+    \fill[lightgray] (c)--(g)--(h)--(f)--(e);
+    \draw[black, thin] (q)--(g);
+    \draw[green, very thick] (e)--(c);
+    \drawstart
+    \drawVs
+}
+
+\newcommand{\stepb} {
+    \fill[lightgray] (c)--(e)--(d)--(a);
+    \fill[lightgray] (c)--(g)--(h)--(f)--(e);
+    \fill[lightgray] (c)--(g)--(b);
+    \draw[black, thin] (q)--(g);
+    \draw[green, very thick] (e)--(c);
+    \draw[black, thin] (g)--(t);
+    \draw[black, thin] (q)--(g);
+    \draw[green, very thick] (g)--(c);
+    \draw[green, very thick] (g)--(b);
+    \drawstart
+    \drawend
+    \drawVs
+}
+
+\newcommand{\polyanyaexpand}{
+    \draw[black,very thin, dashed] (q)--($(q)!5cm!(e)$);
+    \draw[black,very thin, dashed] (q)--($(q)!5cm!(c)$);
+    \draw[orange!50, line width=3pt] (j)--(h);
+    \draw[orange!50, line width=3pt] (h)--(g);
+    \draw[orange!50, line width=3pt] (g)--(c);
+    \draw[cyan, line width=3pt] (e)--(f);
+    \draw[cyan, line width=3pt] (f)--(j);
+}
+
+\newcommand{\drawVG}{
+    \vgedge{a}{d},\vgedge{a}{e},\vgedge{a}{g},\vgedge{a}{h}
+    \vgedge{b}{g},\vgedge{b}{m}
+    \vgedge{c}{d},\vgedge{c}{e},\vgedge{c}{g},\vgedge{c}{f},\vgedge{c}{h}
+    \vgedge{d}{l},\vgedge{d}{g}
+    \vgedge{e}{h},\vgedge{e}{n}
+    \vgedge{f}{l},\vgedge{f}{h},\vgedge{f}{m}
+    \vgedge{g}{n}
+}
+\newcommand{\drawmap}{
+    \drawboundary
+    \drawobstacles
+    \drawmeshs
+    \drawVs
+    \drawstart
+    \drawend
+}
+
+\newcommand{\intervalexpansion}{
+    {\drawmap}
+    {\draw[green!50, line width=3pt, dashed] (e)--(d);}
+    {\draw[green!50, line width=3pt, dashed] (d)--(a);}
+    {\draw[green!50, line width=3pt, dashed] (a)--(c);}
+    {\draw[green!50, line width=3pt, dashed] (e)--(c);}
+    {\draw[green!50, line width=3pt, dashed] (d)--(l);}
+    {\draw[green!50, line width=3pt, dashed] (e)--(f);}
+    {\draw[green!50, line width=3pt, dashed] (f)--(j);}
+    {\draw[green!50, line width=3pt, dashed] (j)--(h);}
+    {\draw[green!50, line width=3pt, dashed] (g)--(h);}
+    {\draw[green!50, line width=3pt, dashed] (c)--(g);}
+    {\draw[green!50, line width=3pt, dashed] (g)--(b);}
+    {\draw[black, line width=3pt] (q)--(g);}
+    {\draw[black, line width=3pt] (g)--(t);}
+}

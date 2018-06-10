@@ -1,0 +1,139 @@
+\definecolor{zzwwqq}{rgb}{0.6,0.4,0.}
+\definecolor{ccqqqq}{rgb}{0.8,0.,0.}
+\definecolor{qqwwtt}{rgb}{0.,0.4,0.2}
+\definecolor{qqzzqq}{rgb}{0.,0.6,0.}
+\definecolor{ududff}{rgb}{0.30196078431372547,0.30196078431372547,1.}
+\coordinate (a) at (2.5, 2.5);
+\coordinate (b) at (3.5, 2.5);
+\coordinate (c) at (3.2, 2.5);
+\coordinate (r) at (3, 2);
+\coordinate (r') at (3, 3);
+\coordinate (t1) at (1.63, 2.28);
+\coordinate (t2) at (1.33, 3);
+\coordinate (t3) at (2.5, 3);
+\coordinate (t4) at (3.5, 3.5);
+\coordinate (t5) at (4.18, 2.82);
+\coordinate (t6) at (4.52, 2.27);
+\coordinate (t7) at (3.5, 1.7);
+\coordinate (t8) at (2.5, 1.5);
+
+\newcommand{\nodelabel}[2] {
+    \node[fill,circle,scale=0.25,label=#2:$#1$,color=ududff] at (#1) {$#1$};
+}
+
+%\draw [line width=2.pt,dash pattern=on 2pt off 2pt,domain=-0.7621281650478093:3.0] plot(\x,{(-2.5--0.5*\x)/-0.5});
+%\draw [line width=2.pt,dash pattern=on 2pt off 2pt,domain=3.0:5.571634219160852] plot(\x,{(-0.5--0.5*\x)/0.5});
+%\draw [line width=2.pt,dash pattern=on 2pt off 2pt,domain=-0.7621281650478093:3.0] plot(\x,{(-0.-0.5*\x)/-0.5});
+%\draw [line width=2.pt,dash pattern=on 2pt off 2pt,domain=3.0:5.571634219160852] plot(\x,{(--3.-0.5*\x)/0.5});
+
+\newcommand{\drawra}{
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=1.0:3.0] plot(\x,{(-2.5--0.5*\x)/-0.5});
+}
+\newcommand{\drawrb}{
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=3.0:5.0] plot(\x,{(-0.5--0.5*\x)/0.5});
+}
+\newcommand{\drawrpa}{
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=1.0:3.0] plot(\x,{(-0.-0.5*\x)/-0.5});
+}
+\newcommand{\drawrpb}{
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=3.0:5.0] plot(\x,{(--3.-0.5*\x)/0.5});
+}
+
+\newcommand{\areaA}{
+  \fill[line width=2.pt,color=ccqqqq,fill=ccqqqq,fill opacity=0.1] (2.5,2.5) -- (1.,4.) -- (1.,2.5) -- cycle;
+  \draw[color=ccqqqq] (1.24, 3.3) node {$areaA$};
+}
+
+\newcommand{\areaAp}{
+  \fill[line width=2.pt,color=ccqqqq,fill=ccqqqq,fill opacity=0.1] (1.,2.5) -- (1.,1.) -- (2.5,2.5) -- cycle;
+  \draw[color=ccqqqq] (1.25, 2) node {$areaA'$};
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=1.0:3.0] plot(\x,{(-2.5--0.5*\x)/-0.5});
+}
+
+\newcommand{\areaB}{
+  \fill[line width=2.pt,color=zzwwqq,fill=zzwwqq,fill opacity=0.1] (3.5,2.5) -- (5.,4.) -- (5.,2.5) -- cycle;
+  \draw[color=zzwwqq] (4.6,3.28) node {$areaB$};
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=3.0:5.0] plot(\x,{(-0.5--0.5*\x)/0.5});
+}
+
+\newcommand{\areaBp}{
+  \fill[line width=2.pt,color=zzwwqq,fill=zzwwqq,fill opacity=0.1] (5.,2.5) -- (3.5,2.5) -- (5.,1.) -- cycle;
+  \draw[color=zzwwqq] (4.5,2.) node {$areaB'$};
+}
+\newcommand{\areaC}{
+  \fill[line width=2.pt,color=qqwwtt,fill=qqwwtt,fill opacity=0.25] (1.,4.) -- (5.,4.) -- (3.5,2.5) -- (2.5,2.5) -- cycle;
+  \draw[color=qqwwtt] (2.768699664953716,3.536745981551138) node {$areaC$};
+}
+
+\newcommand{\areaCp}{
+  \fill[line width=2.pt,color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (2.5,2.5) -- (3.5,2.5) -- (5.,1.) -- (1.,1.) -- cycle;
+  \draw[color=qqzzqq] (2.9078624650952896,1.2962248992718015) node {$areaC'$};
+}
+
+\newcommand{\dashh}{
+  \draw [line width=1.pt,dash pattern=on 1pt off 3pt,domain=1.:5.] plot(\x,{(--2.5-0.*\x)/1.});
+}
+
+\newcommand{\caseA}{
+  \draw [red, dashed] (t2)--(a);
+  \draw [red] (t1)--(a);
+  \nodelabel{t1}{left}
+  \nodelabel{t2}{left}
+}
+
+\newcommand{\caseB}{
+  \draw [red, dashed] (t6)--(b);
+  \draw [red] (t5)--(b);
+  \nodelabel{t5}{right}
+  \nodelabel{t6}{right}
+}
+
+\newcommand{\caseC}{
+  \draw [red, dashed] (t4)--(r);
+  \draw [red] (t3)--(r);
+  \nodelabel{t3}{left}
+  \nodelabel{t4}{right}
+}
+
+\newcommand{\caseCp}{
+  \draw [red, dashed] (t8)--(r');
+  \draw [red] (t7)--(r');
+  \nodelabel{t8}{left}
+  \nodelabel{t7}{right}
+}
+
+\newcommand{\drawbg}{
+  \clip(1.,1.) rectangle (5.,4.);
+  \dashh
+  \draw[gray, line width=2pt] (a)--(b);
+  \nodelabel{a}{above}
+  \nodelabel{b}{below}
+  \nodelabel{r}{below}
+  \nodelabel{r'}{above}
+}
+
+\newcommand{\drawbest}{
+  \areaA
+  \areaAp
+  \areaB
+  \areaBp
+  \areaC
+  \areaCp
+  \drawra
+  \drawrb
+  \drawrpa
+  \drawrpb
+  \draw[red, dashed] (t1)--(a);
+  \draw[red, dashed] (a)--(r);
+  \draw[red, dashed] (t5)--(b);
+  \draw[red, dashed] (b)--(r);
+  \draw[red, dashed] (r)--(c);
+  \draw[red, dashed] (c)--(t7);
+  \draw[red] (r)--(t3);
+
+
+  \nodelabel{t1}{left}
+  \nodelabel{t5}{right}
+  \nodelabel{t3}{left}
+  \nodelabel{t7}{right}
+}

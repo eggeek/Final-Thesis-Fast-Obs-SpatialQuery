@@ -1,0 +1,42 @@
+\coordinate (a) at (2, 5);
+\coordinate (b) at (5, 2);
+\coordinate (r) at (2, 3);
+\coordinate (t) at (5, 4);
+\coordinate (t2) at (2, 6);
+\coordinate (t3) at (3, 2);
+\coordinate (q) at (1, 1);
+
+\newcommand{\nodelabel}[2] {
+    \node[fill,circle,scale=0.2,label=#2:$#1$,color=red] at (#1) {$#1$};
+}
+
+\newcommand{\drawST}[2] {
+    \node[fill,circle,scale=0.2,label=#2:$#1$,color=blue] at (#1) {$#1$};
+}
+
+\newcommand{\snode}{
+    \draw [gray] (a)--(b);
+    \drawST{q}{right}
+    \drawST{t}{above}
+    \nodelabel{r}{below}
+    \nodelabel{a}{above}
+    \nodelabel{b}{above}
+}
+
+\newcommand{\gvalue}{
+    \draw [->,black, very thick] (q.north) to [out=30,in=150] (r.north);
+}
+
+\newcommand{\hvalue}{
+    \draw[black,dashed,very thick] (r)--(t);
+}
+
+\newcommand{\hivalue}{
+    \draw [gray] (a)--(b);
+    \drawST{q}{right}
+    \nodelabel{r}{below}
+    \nodelabel{a}{above}
+    \nodelabel{b}{above}
+    \gvalue
+    \draw[black,dashed,very thick] (r)--($(a)!(r)!(b)$);
+}

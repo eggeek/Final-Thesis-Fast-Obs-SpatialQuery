@@ -1,0 +1,25 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.6cm,y=0.6cm]
+\definecolor{yqyqyq}{rgb}{0.5019607843137255,0.5019607843137255,0.5019607843137255}
+\definecolor{wqwqwq}{rgb}{0.3764705882352941,0.3764705882352941,0.3764705882352941}
+\definecolor{ududff}{rgb}{0.30196078431372547,0.30196078431372547,1.}
+\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+\draw [color=cqcqcq,, xstep=4.0cm,ystep=4.0cm] (-2.,-0.7) grid (5.5,6.);
+\clip(-2.,-0.7) rectangle (5.5,6.);
+\fill[line width=2.pt,fill=black,fill opacity=1.0] (3.,4.) -- (3.,-0.5) -- (4.,-0.5) -- (4.,4.) -- cycle;
+\fill[line width=2.pt,fill=black,fill opacity=1.0] (2.,6.) -- (1.958260850221742,2.42739675673013) -- (-2.036562862356449,2.42739675673013) -- (-2.,6.) -- cycle;
+\draw [line width=2.pt] (3.,4.)-- (4.,4.);
+\draw [line width=2.pt,color=wqwqwq] (4.,4.)-- (5.,2.);
+\draw [line width=2.pt] (3.,-0.5)-- (4.,-0.5);
+\draw [line width=2.pt,color=wqwqwq] (-1.,2.)-- (3.,4.);
+\draw [line width=2.pt,dash pattern=on 7pt off 7pt,color=yqyqyq] (-1.,2.)-- (5.,2.);
+\begin{scriptsize}
+\draw [fill=ududff] (-1.,2.) circle (2.5pt);
+\draw[color=ududff] (-1.3610221733554015,1.519358046860102) node {$q$};
+\draw [fill=ududff] (5.,2.) circle (2.5pt);
+\draw[color=ududff] (5.163642125127989,2.4314078950351963) node {$t$};
+\draw [fill=ududff] (3.,4.) circle (2.5pt);
+\draw [fill=ududff] (3.,-0.5) circle (2.5pt);
+\draw [fill=ududff] (4.,-0.5) circle (2.5pt);
+\draw [fill=ududff] (4.,4.) circle (2.5pt);
+\end{scriptsize}
+\end{tikzpicture}

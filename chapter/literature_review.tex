@@ -90,7 +90,9 @@ Figure~\ref{rtree} shows how to store and retrieve objects.
 
 From the example in figure~\ref{rtree}, we can see that overlapping area will be explored
 multiplel times in retrieval progress, which duplicated efforts.
-So there is a variant doesn't allow overlapping in interior node, called $R^+\textit{-tree}$\cite{sellis1987r+}.
+Thus, some variants use strict non-overlapping interior node (e.g.
+$R^+\textit{-tree}$\cite{sellis1987r+}), and non-overlapping \textit{R-tree} is a wide topic in
+spatial index which beyond the scope of this thesis.
 
 \subsection{Nearest Neighbor Query}
 In the \textit{R-tree}, all nodes are organized by their spatial information,
@@ -107,7 +109,12 @@ The algorithm starts with root node and proceeds down the tree. When it visits a
 current nearest neighbor will be updated;
 When it visits a non-leaf node, the children of such node is sorted by \textit{mindist}, and pruned by
 \textit{minmaxdist}, then algorithm does \textit{depth-first-search} on ordered and pruned children nodes;
-when algorithm finished, the updated nearest neighbor is the answer.  
+when algorithm finished, the updated nearest neighbor is the answer, and it can be easily
+generalized to finding kNN by changes below:
+\begin{itemize}
+  \item  Tracking k current nearest neighbors, instead of one.
+  \item  The pruning is according to the current k-th nearest neighbor.
+\end{itemize}
 
 This kind of algorithm is called \textit{branch-and-bound} traversal, which has been well
 studied and widely used in other artifical intelligence areas\cite{sellis1987r+},
@@ -115,5 +122,221 @@ and existing NN queries are based on it with different ordering and pruning stra
 more details are in \cite{roussopoulos1995nearest,cheung1998enhanced}.
 
 \section{Obstacle k-Nearest Neighbor}\label{lrknn}
+
+In OkNN problem, the metric is obstacle distance,
+so all existing OkNN algorithms are actually Obstacle Distance Computation (ODC).
+In following subsections, we introduce these ODC algorithms and show how to apply them on OkNN.
+
+\subsection{In-main-memory OkNN}
+Solving obstacle path problems in-main-memory has been well studied \cite{de2000computational},
+these works need to compute visibility graph which any pair of co-visible vertices has en edge,
+figure~\ref{vg} shows an example.
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}[scale=0.8]
+  %\includegraphics[width=.6\linewidth]{pic/vg.png}
+    \input{./src/polyanya.tex}
+    \drawboundary
+    \drawobstacles
+    \drawVG
+  \end{tikzpicture}
+  \caption{\small The rectangle is the boundary of the map, black polyogns are obstacles, and all
+  black lines are edge in the visibility graph.}
+  \label{vg}
+\end{figure}
+
+Since all edges of the shortest path belong to visibility graph \cite{lozano1979algorithm},
+once precomputed it and include visible edges from query point, we can run shortest path
+algorithm (e.g. \textit{Dijkstra}) to find k-nearest neighbor.
+However, precomputing visibility graph(VG) is costly:
+even the best algorithm \cite{ghosh1991output} has
+$O(m + nlogn)$ runtime, where $n$ is the number of vertex and $m$ is the number edges,
+and in practice $m$ can reach to $O(n^2)$.
+In spatial database scenario, $n$ can be more than $10,000$, so in-main-memory approach is not
+suitable for spatial database scenario.
+
+\subsection{Local Visibility Graph}
+
+Since building global VG is infeasible, researchers in spatial database field
+are motivated to design an algorithm that only consider query related area.
+
+In 2004, Zhang proposed the \textit{Local Visibility Graph} (LVG) algorithm\cite{zhang2004spatial}
+to compute obstacle distance.
+Assume obstacles are stored in \textit{R-tree},
+given query point $q$, and a target $t$, the algorithm runs in
+following way:
+\begin{enumerate}
+    \item It starts with a small VG centered on $q$ with radius $r=d_e(q, t)$ (figure~\ref{edbt1});
+    \item Then compute shortest path on current VG (figure~\ref{edbt2});
+    \item Enlarge the circle to current obstacle distance $r=d_o(q,t)$, update the VG
+      incrementally (figure~\ref{edbt2}) and recompute the shortest path (figure~\ref{edbt4});
+    \item Repeat the previous step until $r>=d_o(q, t)$.
+\end{enumerate}
+
+\begin{figure*}[!h]
+  \begin{subfigure}{\linewidth}
+    \centering
+    \begin{subfigure}{.45\linewidth}
+      \centering
+      \input{./src/edbt_odc1.tex}
+      \caption{
+        \small 
+        the long rectangle obstacle in the\\
+        circle is retrieved and included in vg.
+      }
+      \label{edbt1}
+    \end{subfigure}%
+    \begin{subfigure}{.45\linewidth}
+      \centering
+      \input{./src/edbt_odc2.tex}
+      \caption{
+        \small current shortest path may be blocked by some obstacles outside
+      }
+      \label{edbt2}
+    \end{subfigure}
+  \end{subfigure}\par\medskip
+  \begin{subfigure}{\linewidth}
+    \centering
+    \begin{subfigure}{.45\linewidth}
+      \centering
+      \input{./src/edbt_odc3.tex}
+      \caption{
+        \small enlarges the circle and updates the vg
+      }
+      \label{edbt3}
+    \end{subfigure}%
+    \begin{subfigure}{.45\linewidth}
+      \centering
+      \input{./src/edbt_odc4.tex}
+      \caption{
+        \small recomputes the shortest path  
+      }
+      \label{edbt4}
+    \end{subfigure}
+  \end{subfigure}
+  \caption{\small LVG algorithm}
+\end{figure*}
+
+Since $r>=d_o(q, t)$, when algorithm finish, it guarantees that no obstacle on current shortest
+path, and thus proof the correctness. This algorithm can be extended to multi-target
+scenario to solve OkNN problem:
+\begin{itemize}
+  \item Initially, $t$ is the \textit{k-th} nearest neighbor in Euclidean space, so that it
+    guarantees that the VG always contains at least $k$ targets;
+  \item Terminate when $r$  not less than the current \textit{k-th} nearest distance;
+\end{itemize}
+
+\subsection{Fast filter}
+
+There's another similar work proposed by Xia\cite{xia2004fast},
+the difference is, instead of considering obstacles in a circle area,
+it only retrieves obstacles on current shortest path,
+updates the LVG and recomputes the shortest path.
+Since less obstacles are involved in VG,
+the algorithm is called \textit{Fast Filter}.
+Figure~\ref{xia} shows an example.
+\begin{figure*}[!h]
+  \centering
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \input{./src/fastfilter0.tex}
+    \caption{}
+    \label{xia0}
+  \end{subfigure}%
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \input{./src/fastfilter1.tex}
+    \caption{}
+    \label{xia1}
+  \end{subfigure}
+  \caption{
+    \small Black polygons are obstacle,
+    $q$ is query point, $t$ is the target.
+    Initially, the VG only contains
+    the rectangle obstacle between the $qt$,
+    and the corresponding shortest path is computed (fig~\ref{xia0}).
+    Then retrieves the square
+    obstacle on the current path,
+    updates VG and recomputes shortest path (fig~\ref{xia1}).
+  }
+  \label{xia}
+\end{figure*}
+
+To solve OkNN, we need following changes:
+\begin{itemize}
+  \item initially compute obstacle distance for k nearest neighbors, and store results in
+    \textit{max-heap} with size $k$;
+  \item keep retrieving next NN and compute the obstacle distance $d_o$;
+  \item when $d_o$ not large than the top value of heap, pop top and insert the current $d_o$;
+  \item terminate when the Euclidean distance to current NN is large than the Obstacle distance
+    on top of the heap;
+\end{itemize}
+\subsection{Discussion}
+\textit{LVG}\cite{zhang2004spatial} and \textit{Fast filter}\cite{xia2004fast} are simple to understand,
+provide optimality guarantees and the promise of fast performance. Such advantages make them
+attractive to researchers and, despite more than a decade since their introduction,
+they continue to appear as ingredients in a variety of kNN studies from the literature; e.g.
+\cite{gao2011efficient,gao2016reverse}.
+However, these visibility graph based algorithms also suffer from a number of notable
+disadvantages including:
+\begin{enumerate}[label=(\roman*)]
+  \item costly online visibility checks;
+  \item an incremental construction process that has up to quadratic space and time complexity for the worst case;
+  \item duplicated effort, since the graph is discarded each time the query point changes.
+\end{enumerate}
+
 \section{Pathfinding on Navigation Mesh}\label{lrnav}
+
+\subsection{Historic background}
+Because of the limitation of VG, \textit{Navigation Mesh} comes to our sight.
+Ronald first proposed this concept in 1986\cite{ronald1986pathfinding}, then it is applied on
+robotics and game pathfinding.
+
+Navigation mesh divides traversable space into convex polygons,
+figure~\ref{nav} shows an example.
+Compare to VG (fig~\ref{vg}), it can be generated by\textit{Constrained Delaunay
+Triangulation}\cite{chew1989constrained} in $O(nlogn)$ times,
+so that it is feasible to preprocess the entire map.
+Additionally, adding or removing obstacles only need to modify a few number of mesh polygons,
+which is very flexible. It seems like a perfect framework for OkNN,
+the only problem is: how to compute obstacle distance on it?
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}[scale=0.8]
+    \input{src/polyanya.tex}
+    {
+    \drawboundary
+    \drawobstacles
+    \drawmeshs
+    }
+  \end{tikzpicture}
+  \caption{\small Navigation Mesh: The rectangle is the boundary of the map, black polyogns are
+  obstacles, gray lines are edges of mesh polygons.}
+  \label{nav}
+\end{figure}
+
+Previous pathfinding algorithms on navigation mesh are not suitable for spatial query
+processing, and thus it's not attractive to researchers in this fields.
+Three widly used algorithms are:
+\begin{itemize}
+\item Channel Search \cite{kallmann2005path}: first find an abstract path from start to target
+    composed by polygons, then refine the abstract path to a sequence of concrete points. This
+    algorithm only generate an approximately shortest path, the lack of optimality makes it not
+    suitable for OkNN query.
+  \item TA* \cite{demyen2006efficient}: similar to Channel Search, but it can repeat the search
+    process until finding an optimal shortest path. The repeating is time-consuming, so it is not
+    suitable for query processing.
+  \item TRA* \cite{demyen2006efficient}: similar to TA*, but TRA* can utilize preprocessing to
+    speed up pathfinding. The problem is that the precomputed information will be invalid when
+    environment change, so it is not suitable for database scenario.
+\end{itemize}
+
+However, this fact has been changed by a recent work called
+\textit{Polyanya}\cite{cuicompromise}. It is a fast, optimal and fexible pathfinding algorithm
+which is perfect for query processing in spatial database.
+
+\subsection{Polyanya}
+
+
 \section{Related Spatial Queries}\label{lrquery}
