@@ -53,7 +53,7 @@ Both are described in~\cite{cuicompromise}}, remain unchanged.
 \end{figure}
 
 The version of \textit{Polyanya} we have just described is unlikely to be efficient. Without a
-heuristic function for guidance, nodes can only be prioritised by the \textit{g-value} of their
+heuristic function for guidance, nodes can only be prioritized by the \textit{g-value} of their
 root point, which is settled at the time of expansion. However, the \textit{g-value} does not
 reflect the distance between the root and its corresponding interval. For example, in
 Figure~\ref{suc2}, all observable successors would have the same expansion priority. Thus we
@@ -72,7 +72,7 @@ outperforms other proposed algorithms in certain contexts.
 \end{algorithm}
 To deal with this problem we develop two online heuristics which can be fruitfully applied to OkNN:
 \begin{itemize}
-  \item The Interval Heuristic, which prioritises nodes using the closest point from its
+  \item The Interval Heuristic, which prioritizes nodes using the closest point from its
     associated interval.
   \item The Target Heuristic, which relies on a Euclidean nearest neighbour estimator to
     provide a target dynamically at the time of expansion.
@@ -138,8 +138,8 @@ expansions in areas where no nearest neighbor can exist, Figure~\ref{hv} shows a
     \intervalexpansion
   \end{tikzpicture}
   \caption{\small Search space of Interval Heuristic:$q$ is query point,
-  $t$ is a target, green dashed segments are interval of expanded search nodes.
-  From the figure we can see that the algorithm does unnecessary expansion in the direction that no target.}
+  $t$ is a target, green dashed segments are the interval of expanded search nodes.
+  From the figure we can see that the algorithm does unnecessary expansions in the direction that no target.}
   \label{hv}
 \end{figure}
 \noindent
@@ -151,12 +151,12 @@ follows:
 \end{definition}
 We implement this idea as follow: 
 When the relative location between targets and $r$ are in case 3 of the $h_p$,
-instead of flipping targets, we filp $r$, and thus formed six areas as shown in Figure~\ref{fa}.
+instead of flipping targets, we flip $r$, and thus formed six areas as shown in Figure~\ref{fa}.
 For $t \in areaA$, the \textit{h-value} is $d_e(r, a) + d_e(a, t)$;
 for $t \in areaA'$, the \textit{h-value} is $d_e(r',a) + d_e(a, t)$,
 and because $d_e(r', a) = d_e(r, a)$, we can combine $areaA$ and $areaA'$,
 so we need to find the nearest neighbor of $a$ for $t \in areaA \cup areaA'$;
-for same reason, we can combine $areaB, areaB'$, so finally we formed four areas.
+by the same reason, we can combine $areaB, areaB'$, so finally we formed four areas.
 Then following the example, we may reason as follows:
 \begin{figure*}[!hbt]
   \centering
@@ -253,11 +253,11 @@ accepts either $h_v$ and $h_t$ as a heuristic function and has, in both cases, t
 \end{algorithm}
 
 \section{Summary}
-In this chapter, we start with two straightforward adaption of point-to-point Polyany
+In this chapter, we start with two straightforward adaptions of point-to-point Polyany
 and finally proposed two heuristics for the Polyanya OkNN algorithm.
-For \textit{Interval Heuristic}, it support multi-target by
-removing $t$ from \textit{h-value}; for \textit{Target Heuristic}, it support multi-target by
+For \textit{Interval Heuristic}, it supports multi-target by
+removing $t$ from \textit{h-value}; for \textit{Target Heuristic}, it supports multi-target by
 employing spatial index and computing closest target dynamically. Each heuristic has their
-suitable scenario, in following chapters we will evaluate their performance under different
+suitable scenario, in following chapters, we will evaluate their performance under different
 scenarios (chapter~\ref{empirical})  and discuss some future improvements
 (chapter~\ref{conclusionfuture}). 

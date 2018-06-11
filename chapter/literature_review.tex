@@ -1,11 +1,11 @@
 \chapter{Literature Review}\label{lreview}
 \section{Overview}\label{lroverview}
-As we've mentioned in previous chapter, OkNN problem appears in both
+As we've mentioned in the previous chapter, OkNN problem appears in both
 AI path planning and Spatial query processing. Therefore, this literature review includes
 related works in these two fields.
 
 In section~\ref{lrai}, we introduce two classic pathfinding algorithms:
-\textit{Dijkstra} and \textit{A*}, as the historic background.
+\textit{Dijkstra} and \textit{A*}, as the historical background.
 In section~\ref{lrindex}, we introduce a spatial index \textit{R-tree},
 and discuss how it solves traditional kNN problem.
 In section~\ref{lrknn}, we focus on existing works on OkNN, two algorithms based on
@@ -19,19 +19,19 @@ improved by our research.
 The most widely used pathfinding algorithm is \textit{Dijkstra} \cite{dijkstra1959note}. 
 The algorithm works on a nonnegative weighted graph, it requires a priority queue and
 regards the length of shortest path as key, and it visit vertices in the order
-of lenght of shortest path until requirements be satisfied, e.g. the target has been found.
+of length of the shortest path until requirements are satisfied, e.g. the target has been found.
 When the target is the furthest vertex to the start vertex, \textit{Dijkstra} has to explore the entire
 map. Based on such consideration, researchers generalized \textit{Dijkstra} algorithm to
 \textit{best-first search} which explores a graph by expanding the most promising node chosen
-acording to a specified rule.
+according to a specified rule.
 \textit{A*} \cite{hart1968formal} is known as a famous \textit{best-first search},
 it select the path that minimizes:
 $$
 f(n) = \textit{g-value}(n) + \textit{h-value}(n)
 $$
-where $n$ is the last node on the path, \textit{g-value} is the length of shortest path from start to
-$n$, \textit{h-value} is a estimation of shortest path from $n$ to the goal which is
-problem-specific. One important propert of \textit{h-value} is admissibility, meaning that it never
+where $n$ is the last node on the path, \textit{g-value} is the length of the shortest path from start to
+$n$, \textit{h-value} is an estimation of the shortest path from $n$ to the goal which is
+problem-specific. One important property of \textit{h-value} is admissibility, meaning that it never
 overestimates the actual cost to the target.
 For example, in an Euclidean plane with obstacles, \textit{h-value} can be the Euclidean
 distance.
@@ -45,7 +45,7 @@ In following sections and the chapter~\ref{proposedalgo}, we will show how \text
 
 \textit{R-tree} has many variations\cite{guttman1984r,beckmann1990r,sellis1987r+,kamel1993hilbert},
 they improve efficiency in different aspects,
-but they still provide same functionality,
+but they still provide the same functionality,
 so we only introduce the classic \textit{R-tree} in this section.
 
 \begin{figure}[htp]
@@ -55,13 +55,13 @@ so we only introduce the classic \textit{R-tree} in this section.
   \label{mbr}
 \end{figure}
 
-\textit{R-tree} is a heighb-balanced tree \cite{guttman1984r}, all objects are stored in leaf
+\textit{R-tree} is a heigh-balanced tree \cite{guttman1984r}, all objects are stored in a leaf
 node. In leaf node, if an object is not a point, it would be represented by its \textit{Minimal Bounding
-Rectangle} (MBR), figure~\ref{mbr} shows example of MBRs. Each interior node is also
+Rectangle} (MBR), figure~\ref{mbr} shows examples of MBR. Each interior node is also
 represented by a MBR which contains either leaf nodes or descendant interior nodes.
 To guarantee efficiency, each non-root node of \textit{R-tree} can contain at least $m$ entries
 and at most $M$ entries, where $m, M$ are specified constant when \textit{R-tree} is built, and
-\textit{R-tree}'s root alway has two entries. 
+\textit{R-tree}'s root always has two entries. 
 Usually, objects retrieval start from the root,
 then narrow down to children nodes based on spatial information in their MBRs, and finally
 retrieve objects from leaf nodes.
@@ -89,10 +89,10 @@ Figure~\ref{rtree} shows how to store and retrieve objects.
 \end{figure}
 
 From the example in figure~\ref{rtree}, we can see that overlapping area will be explored
-multiplel times in retrieval progress, which duplicated efforts.
+multiple times in retrieval progress, which duplicated efforts.
 Thus, some variants use strict non-overlapping interior node (e.g.
 $R^+\textit{-tree}$\cite{sellis1987r+}), and non-overlapping \textit{R-tree} is a wide topic in
-spatial index which beyond the scope of this thesis.
+the spatial index field which beyond the scope of this thesis.
 
 \subsection{Nearest Neighbor Query}
 In the \textit{R-tree}, all nodes are organized by their spatial information,
@@ -101,7 +101,7 @@ To introduce the algorithm, we need to discuss two metrics: given query point $q
 \begin{itemize}
   \item \textit{\textbf{mindist}} is the minimal distance from $q$ to the MBR, it estimates the
     distance from $q$ to inside object, so this metric is the priority of the tree node;
-  \item \textit{\textbf{minmaxdist}} is the uppber bound of the NN distance of any object inside
+  \item \textit{\textbf{minmaxdist}} is the upper bound of the NN distance of any object inside
     the MBR, if the $mindist$ of any MBR large than this value, then such MBR cannot contains
     the nearest object, so this metric is for pruning.
 \end{itemize}
@@ -117,7 +117,7 @@ generalized to finding kNN by changes below:
 \end{itemize}
 
 This kind of algorithm is called \textit{branch-and-bound} traversal, which has been well
-studied and widely used in other artifical intelligence areas\cite{sellis1987r+},
+studied and widely used in other artificial intelligence areas\cite{sellis1987r+},
 and existing NN queries are based on it with different ordering and pruning strategies,
 more details are in \cite{roussopoulos1995nearest,cheung1998enhanced}.
 
@@ -129,7 +129,7 @@ In following subsections, we introduce these ODC algorithms and show how to appl
 
 \subsection{In-main-memory OkNN}
 Solving obstacle path problems in-main-memory has been well studied \cite{de2000computational},
-these works need to compute visibility graph which any pair of co-visible vertices has en edge,
+these works need to compute visibility graph which any pair of co-visible vertices has an edge,
 figure~\ref{vg} shows an example.
 \begin{figure}[htp]
   \centering
@@ -140,8 +140,8 @@ figure~\ref{vg} shows an example.
     \drawobstacles
     \drawVG
   \end{tikzpicture}
-  \caption{\small The rectangle is the boundary of the map, black polyogns are obstacles, and all
-  black lines are edge in the visibility graph.}
+  \caption{\small The rectangle is the boundary of the map, black polygons are obstacles and all
+  black lines are edges in the visibility graph.}
   \label{vg}
 \end{figure}
 
@@ -150,24 +150,24 @@ once precomputed it and include visible edges from query point, we can run short
 algorithm (e.g. \textit{Dijkstra}) to find k-nearest neighbor.
 However, precomputing visibility graph(VG) is costly:
 even the best algorithm \cite{ghosh1991output} has
-$O(m + nlogn)$ runtime, where $n$ is the number of vertex and $m$ is the number edges,
-and in practice $m$ can reach to $O(n^2)$.
+$O(m + nlogn)$ runtime, where $n$ is the number of vertexes and $m$ is the number of edges,
+and in practice, $m$ can reach to $O(n^2)$.
 In spatial database scenario, $n$ can be more than $10,000$, so in-main-memory approach is not
 suitable for spatial database scenario.
 
 \subsection{Local Visibility Graph}
 
 Since building global VG is infeasible, researchers in spatial database field
-are motivated to design an algorithm that only consider query related area.
+are motivated to design an algorithm that only considers query related area.
 
 In 2004, Zhang proposed the \textit{Local Visibility Graph} (LVG) algorithm\cite{zhang2004spatial}
 to compute obstacle distance.
 Assume obstacles are stored in \textit{R-tree},
 given query point $q$, and a target $t$, the algorithm runs in
-following way:
+following ways:
 \begin{enumerate}
     \item It starts with a small VG centered on $q$ with radius $r=d_e(q, t)$ (figure~\ref{edbt1});
-    \item Then compute shortest path on current VG (figure~\ref{edbt2});
+    \item Then compute shortest path on the current VG (figure~\ref{edbt2});
     \item Enlarge the circle to current obstacle distance $r=d_o(q,t)$, update the VG
       incrementally (figure~\ref{edbt2}) and recompute the shortest path (figure~\ref{edbt4});
     \item Repeat the previous step until $r>=d_o(q, t)$.
@@ -217,8 +217,8 @@ following way:
   \caption{\small LVG algorithm}
 \end{figure*}
 
-Since $r>=d_o(q, t)$, when algorithm finish, it guarantees that no obstacle on current shortest
-path, and thus proof the correctness. This algorithm can be extended to multi-target
+Since $r>=d_o(q, t)$, when algorithm finish, it guarantees that no obstacle on the current shortest
+path, and thus proving the correctness. This algorithm can be extended to multi-target
 scenario to solve OkNN problem:
 \begin{itemize}
   \item Initially, $t$ is the \textit{k-th} nearest neighbor in Euclidean space, so that it
@@ -230,9 +230,9 @@ scenario to solve OkNN problem:
 
 There's another similar work proposed by Xia\cite{xia2004fast},
 the difference is, instead of considering obstacles in a circle area,
-it only retrieves obstacles on current shortest path,
+it only retrieves obstacles on the current shortest path,
 updates the LVG and recomputes the shortest path.
-Since less obstacles are involved in VG,
+Since fewer obstacles are involved in VG,
 the algorithm is called \textit{Fast Filter}.
 Figure~\ref{xia} shows an example.
 \begin{figure*}[!h]
@@ -250,14 +250,14 @@ Figure~\ref{xia} shows an example.
     \label{xia1}
   \end{subfigure}
   \caption{
-    \small Black polygons are obstacle,
+    \small Black polygons are obstacles,
     $q$ is query point, $t$ is the target.
     Initially, the VG only contains
     the rectangle obstacle between the $qt$,
     and the corresponding shortest path is computed (fig~\ref{xia0}).
     Then retrieves the square
     obstacle on the current path,
-    updates VG and recomputes shortest path (fig~\ref{xia1}).
+    updates VG and recomputes the shortest path (fig~\ref{xia1}).
   }
   \label{xia}
 \end{figure*}
@@ -274,12 +274,12 @@ To solve OkNN, we need following changes:
 \subsection{Discussion}
 When search space is large (e.g. target is far from the query point), \textit{fast
 filter}\cite{xia2004fast} is
-more efficient because it only consider obstacles that might on the path, meanwhile
+more efficient because it only considers obstacles that might on the path, meanwhile
 \textit{LVG}\cite{zhang2004spatial} will build visibility graph for a large area, which is slow. 
-In multi-target scenario, when $k$ is large, \textit{LVG}\cite{zhang2004spatial} is more efficient because
-\textit{dijkstra} is a natural single-source algorithm, meanwhile, each time \textit{fast
+In a multi-target scenario, when $k$ is large, \textit{LVG}\cite{zhang2004spatial} is more efficient because
+\textit{Dijkstra} is a natural single-source algorithm, meanwhile, each time \textit{fast
 filter}\cite{xia2004fast} can
-only compute path for a single target, so that it duplicates effort for common prefixes of $k$
+only compute the path for a single target, so that it duplicates effort for common prefixes of $k$
 targets.
 
 Both \textit{LVG}\cite{zhang2004spatial} and \textit{Fast filter}\cite{xia2004fast} are simple to understand,
@@ -292,23 +292,23 @@ disadvantages including:
 \begin{enumerate}[label=(\roman*)]
   \item costly online visibility checks;
   \item an incremental construction process that has up to quadratic space and time complexity for the worst case;
-  \item duplicated effort, since the graph is discarded each time the query point changes.
+  \item duplicated efforts are unavoidable, since the graph is discarded each time the query point changes.
 \end{enumerate}
 
 \section{Pathfinding on Navigation Mesh}\label{lrnav}
 
-\subsection{Historic background}
+\subsection{Historical background}
 Because of the limitation of VG, \textit{Navigation Mesh} comes to our sight.
 Ronald first proposed this concept in 1986\cite{ronald1986pathfinding}, then it is applied on
 robotics and game pathfinding.
 
 Navigation mesh divides traversable space into convex polygons, the convexity of mesh
-guarantees that all insides points are co-visible, so that it not needs visibility checking,
+guarantees that all insides points are co-visible so that it not needs visibility checking,
 Figure~\ref{nav} shows an example.
 Compare to VG (fig~\ref{vg}), it can be generated by\textit{Constrained Delaunay
 Triangulation}\cite{chew1989constrained} in $O(nlogn)$ times,
 so that it is feasible to preprocess the entire map.
-Additionally, adding or removing obstacles only needs to modify a few number of mesh polygons,
+Additionally, adding or removing obstacles only needs to modify a few numbers of mesh polygons,
 which is very flexible. It seems like a perfect framework for OkNN,
 the only problem is that how to compute obstacle distance on it.
 
@@ -322,17 +322,17 @@ the only problem is that how to compute obstacle distance on it.
     \drawmeshs
     }
   \end{tikzpicture}
-  \caption{\small Navigation Mesh: The rectangle is the boundary of the map, black polyogns are
+  \caption{\small Navigation Mesh: The rectangle is the boundary of the map, black polygons are
   obstacles, gray lines are edges of mesh polygons.}
   \label{nav}
 \end{figure}
 
 Previous pathfinding algorithms on navigation mesh are not suitable for spatial query
 processing, and thus it's not attractive to researchers in this fields.
-Three widly used algorithms are:
+Three widely used algorithms are:
 \begin{itemize}
 \item Channel Search \cite{kallmann2005path}: first find an abstract path from start to target
-    composed by polygons, then refine the abstract path to a sequence of concrete points. This
+    composed of polygons, then refine the abstract path to a sequence of concrete points. This
     algorithm only generate an approximately shortest path, the lack of optimality makes it not
     suitable for OkNN query.
   \item TA* \cite{demyen2006efficient}: similar to Channel Search, but it can repeat the search
@@ -340,16 +340,16 @@ Three widly used algorithms are:
     suitable for query processing.
   \item TRA* \cite{demyen2006efficient}: similar to TA*, but TRA* can utilize preprocessing to
     speed up pathfinding. The problem is that the precomputed information will be invalid when
-    environment change, so it is not suitable for database scenario.
+    the environment change, so it is not suitable for database scenario.
 \end{itemize}
 
 However, this fact has been changed by a recent work called
-\textit{Polyanya}\cite{cuicompromise}. It is a fast, optimal and fexible pathfinding algorithm
+\textit{Polyanya}\cite{cuicompromise}. It is a fast, optimal and flexible pathfinding algorithm
 which is perfect for query processing in spatial database.
 
 \subsection{Polyanya}
 \textit{Polyanya} can be seen as an instance of \textit{A*}: it performs a best-first search
-using an admissible heuristic function to prioritise nodes. The mechanical details are however
+using an admissible heuristic function to prioritize nodes. The mechanical details are however
 quite different, there are three key components:
 \begin{itemize}
 \item \textbf{Search Nodes}: Conventional  search algorithms proceed from one traversable point
@@ -434,22 +434,22 @@ OkNN in our research.
 
 \begin{itemize}
 
-\item \textbf{Obstacle Range Query}(OR): given query point $q$ and range $r$,
+\item \textbf{Obstacle Range Query}(OR): given the query point $q$ and a range $r$,
   it returns all targets which obstacle distance to $q$ are less or equal to $r$ \cite{zhang2004spatial}. 
 To solve this by OkNN, we can let $k$ be infinite and terminate the algorithm when current
 obstacle distance large than $r$.
 
 \item \textbf{Obstacle Reverse k-Nearest Neighbor}(ORkNN): it is proposed by Gao in
 2011\cite{gao2011efficient} for $k=1$, and be generalized to $k>1$ in
-2016\cite{gao2016reverse}. ORkNN given query point $q$ and $k$, return a set of target which
+2016\cite{gao2016reverse}. ORkNN given query point $q$ and $k$, return a set of targets which
 regards $q$ as its OkNN: $\{t | q \in OkNN(t, k)\}$. The query processing has two stages:
-(i) \textit{search stage}: explore search space to get a set of candidate; (ii) \textit{refine
+(i) \textit{search stage}: explore search space to get a set of candidates; (ii) \textit{refine
 stage}: calls OkNN for each candidate, remove a candidate if $q$ is not its OkNN.
 The first stage needs to compute obstacle distance to prune search space, and the second stage 
 can directly get benefit from the improvement of OkNN.
 
 \item \textbf{Continuous Obstacle k-Nearest Neighbor}(COkNN): it's proposed in
-  2009\cite{gao2009continuous}, simliar to OkNN, but the query becomes a segment.
+  2009\cite{gao2009continuous}, similar to OkNN, but the query becomes a segment.
   The algorithm first generates a list of "split" points, and reduce the problem to finding the
     OkNN for these points. It also needs to compute obstacle distance to prune search space.
 

@@ -24,8 +24,8 @@ combat or resource gathering.
 \label{obs_dis}
 \end{figure}
 
-Tradional kNN queries in the plane (i.e. no obstacles) is a well studied problem that can be
-handled by algorithms based on spatial index. A key ingredient to the success of
+Traditional kNN queries in the plane (i.e. no obstacles) is a well studied problem that can be
+handled by algorithms based on a spatial index. A key ingredient to the success of
 these algorithms is the Euclidean metric which provides perfect distance information between
 any pair of points. When obstacles are introduced however the Euclidean metric becomes an often
 misleading lower-bound, and the metric becomes obstacle distance. Figure~\ref{obs_dis} shows such an example.
@@ -58,17 +58,17 @@ and discuss why they have such disadvantages.
 \section{Major Objectives}
 In this research, we develop a new method for computing \emph{OkNN} which avoids same
 disadvantages in existing works. Our research extends an existing very fast point-to-point
-pathfinding algorithm \emph{Polyanya} to multi-target case.
+pathfinding algorithm \emph{Polyanya} to the multi-target case.
 
 \section{Thesis Organisation}
-The rest of the thesis is organised as follows:
+The rest of the thesis is organized as follows:
 \begin{itemize}
-  \item In chapter~\ref{lreview}, we review related works in different area, includes: AI
+  \item In chapter~\ref{lreview}, we review related works in different areas, includes: AI
     searching, spatial index and spatial query processing.
   \item In chapter~\ref{proposedalgo}, we introduce the proposed algorithms and discuss their
-    behaviors, formal proof for correctness will be proveded.
-  \item In chapter~\ref{empirical}, we provide experiment results to demonstrate the
-    performance of propsed algorithms.
+    behaviors, formal proof for correctness will be provided.
+  \item In chapter~\ref{empirical}, we provide results of experiments to demonstrate the
+    performance of proposed algorithms.
   \item In chapter~\ref{conclusionfuture}, we summarize our contributions and discuss future
     works.
 \end{itemize}
