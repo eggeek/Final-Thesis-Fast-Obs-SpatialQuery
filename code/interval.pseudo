@@ -9,7 +9,7 @@
       return resut\;
     }{ continue\; }
   }{
-    find\_find\_nodes\_case2()\;
+    find\_final\_nodes\_case2()\;
     successors = genSuccessors(node)\;
     \ForEach{suc in successors} {
       suc.gValue = node.gValue + dist(node.root, suc.root)\;

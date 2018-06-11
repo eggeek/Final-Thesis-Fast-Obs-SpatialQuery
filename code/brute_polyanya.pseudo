@@ -1,7 +1,3 @@
-timeCost = 0\;
-nodeGen = 0\;
 \ForEach{t in targets} {
   polyanya.run(start, t)\;
-  timeCost += polyanya.searchTimeCost\;
-  nodeGen += polyanya.nodeGenNum\;
 }

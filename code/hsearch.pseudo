@@ -12,9 +12,9 @@ while{heap not empty}{
     \eIf{node.target has been found} {
       node.target = get\_closest\_target(node)\;
       node.hValue = get\_h\_value(node, node.target)\;
-      node.fValue = node.hValue + node.gValue;
-      heap.push(node);
-      continue;
+      node.fValue = node.hValue + node.gValue\;
+      heap.push(node)\;
+      continue\;
     }{
       find\_final\_node\_case2()\;
       successors = genSuccessors(node)\;
