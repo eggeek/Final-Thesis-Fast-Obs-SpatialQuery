@@ -1,6 +1,6 @@
 \KwResult{k-nearest neighbor}
 init\_search()\;
-find\_final\_node\_case1()\;
+find\_final\_node\_in_initialization()\;
 while{heap not empty}{
   node = heap.pop()\;
   \eIf{node is final node}{
@@ -16,7 +16,7 @@ while{heap not empty}{
       heap.push(node)\;
       continue\;
     }{
-      find\_final\_node\_case2()\;
+      find\_final\_node\_in_search()\;
       successors = genSuccessors(node)\;
       \ForEach{suc in successors} {
         suc.gValue = node.gValue + dist(node.root, suc.root)\;

@@ -1,3 +1,44 @@
 \chapter{Conclusion and Future Work}\label{conclusionfuture}
 \section{Research Contributions}\label{contribution}
+
+In this work we consider efficient algorithms for OkNN:
+the problem of finding $k$ nearest neighbours in a plane and in the presence of obstacles.
+We describe three new OkNN algorithms, all based on Polyanya~\cite{cuicompromise},
+a recent and very fast algorithm for computing Euclidean-optimal shortest paths in the plane.
+The first variant involves brute force search (one query per target point).
+The second and third variants involves running Polyanya as a multi-target algorithm but with added heuristic guidance.
+We develop two new online and admissible heuristics for this purpose: the Interval Heuristic and the Target Heuristic.
+
+We compare these variant algorithms against one another and against LVG~\cite{zhang2004spatial},
+an influential and state of the art OkNN method based on incremental visibility graphs.
+The headline result from our experiment is that Polyanya OkNN can be up to
+\textbf{three orders of magnitude} faster than LVG.
+
+Moreover, each of the three variants appears best suited to particular OkNN settings:
+\textbf{brute-force Polyanya} is highly effective when the number of candidates is small (independent of $k$);
+the \textbf{Interval Heuristic} works well when targets are many (again, independent of $k$);
+the \textbf{Target Heuristic} works well when targets are few and $k$ is also small.
+
+The work has been accepted for publication on \textit{Proceedings of the 11th Annual Symposium on Combinatorial Search (SoCS’2018), colocated with
+IJCAI/ECAI’2018, July 2018}.
+
 \section{Future Works}\label{future}
+We also consider future works in following directions.
+Firstly, due to the high performance of proposed algorithms, we believe they can be used to
+speed up other types of spatial query which need to compute obstacle distance,
+as described in section~\ref{lrquery}.
+
+Secondly, we can improve heuristic function in \textit{target heuristic}.
+In experiments, we notice that the \textit{target heuristic} cost $\approx 80\%$ of
+total running time on NN query, and one possible way is combining four queries into one.
+Besides, in literature review, we mainly focus on \textit{R-tree} and its variants which
+have good scalability on dimensions, however, in our case, the dimension is always two (maybe
+three in 3D extension). Thus, other high performance low-dimension data structures may helpful,
+e.g. \textit{KD-tree}\cite{ooi1987spatial} and
+\textit{Locality-sensitive hashing}\cite{slaney2008locality}.
+
+Thirdly, \textit{brute-force Polyanya} can be improved by smart pruning. We notice that
+the \textit{brute-force Polyanya} outperforms other proposed algorithms in sparse scenario,
+thus, instead of considering all targets,
+a pruning strategy like \textit{fast filter}\cite{xia2004fast} may make it work in general
+scenario.
