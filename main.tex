@@ -1,4 +1,5 @@
 \documentclass[a4paper,pdflatex,11pt,mitminorthesis,singlespace,oneside]{cssethesis}
+\renewcommand{\thesiscoursecode}{C6001}
 %% Language and font encodings
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
@@ -85,6 +86,13 @@
 \begin{thesisabstract}			% generate the abstract page.
 \input{chapter/abstract}
 \end{thesisabstract}                 
+
+\chapter*{List of publications}{
+\textit{Shizhe Zhao, David Taniar, Daniel Harabor, "Fast k-Nearest Neighbor On A Navigation
+Mesh", Proceedings of the 11th Annual Symposium on Combinatorial Search (SoCS’2018), colocated with
+IJCAI/ECAI’2018, July 2018}
+\addcontentsline{toc}{chapter}{List of publications}
+}
 
 %\thesisdeclarationpage			% generate the declaration page (optional).
 

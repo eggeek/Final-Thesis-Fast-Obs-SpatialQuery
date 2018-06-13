@@ -139,7 +139,9 @@
 }
 
 \newcommand{\intervalexpansion}{
-    {\drawmap}
+    \drawboundary
+    \drawobstacles
+    \drawmeshs
     {\draw[green!50, line width=3pt, dashed] (e)--(d);}
     {\draw[green!50, line width=3pt, dashed] (d)--(a);}
     {\draw[green!50, line width=3pt, dashed] (a)--(c);}
@@ -153,4 +155,7 @@
     {\draw[green!50, line width=3pt, dashed] (g)--(b);}
     {\draw[black, line width=3pt] (q)--(g);}
     {\draw[black, line width=3pt] (g)--(t);}
+    \drawstart
+    \drawend 
+    \drawVs
 }

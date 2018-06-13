@@ -200,11 +200,14 @@ heuristic function has good scalability.
 Although we have seen in other experiements that brute-force \textit{Polyanya} has an advantage when $k$ is large, this advantaged disappears as $|T|$ grows.
 In some practical settings $|T|$ can be in the hundreds or thousands, e.g.~\cite{abeywickrama2016k} while $k$ is usually orders of magnitude smaller. 
 
-\section{Experiment 4: behavior of target heuristic}\label{exp4}
+\section{Analyze properties of target heuristic}\label{exp4}
 From previous experiments, we notice that the \textit{target heuristic} always has smaller search space,
 but it's sometimes orders of magnitudes slower than other competitors.
-Thus, we want to dig out more details about the behavior of $h_t$.
-This experiment aims to examine the target heuristic from following aspects:
+Thus, we want to dig out more properties of $h_t$.
+
+Since $h_t$ is not design for the dense targets scenario,
+we only consider experiment records from the sparse scenario,
+and we analyze data in following aspects:
 \begin{itemize}
   \item the ratio of the cost on the heuristic function in total elapsed time;
   \item the ratio of the reassignment in total expanded nodes;
@@ -217,7 +220,7 @@ $\textit{heuristic cost} / \textit{total cost}$.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=.7\linewidth]{./pic/hcost.png}
-  \caption{\small Records from experiments 1,2,3 produce the plot}
+  \caption{}
   \label{hcost}
 \end{figure}
 The result shows that the $h_t$ cost $\approx 90\%$ of total time, meaning that
@@ -225,15 +228,16 @@ The result shows that the $h_t$ cost $\approx 90\%$ of total time, meaning that
 to outperform competitors.
 
 \subsection{Side effect}
-Figure~\ref{lazy_reassign} shows the ratio of \textit{lazy reassignment} when $k$ increase.
+A known side effect of $h_t$ is the \textit{reassignment} when $k>1$.
+Figure~\ref{lazy_reassign} shows the ratio of $\textit{reassignment} / \textit{expanded nodes}$ when $k$ increase.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=.7\linewidth]{./pic/lazy_reassign.png}
-  \caption{\small Records from experiments 1,2,3 produce the plot.}
+  \caption{}
   \label{lazy_reassign}
 \end{figure}
-The result shows that the side effect-\textit{reassignment} happens more freqently when $k$
-increase, meaning that \textit{target heuristic} is more suitable for small $k$.
+The result shows that \textit{reassignment} happens more freqently when $k$
+increase, meaning that \textit{target heuristic} is more suitable when $k$ is small.
 
 \subsection{Ratio of heuristic call}
 Figure~\ref{lazy_compute} shows the distribution of ratio:
@@ -241,7 +245,7 @@ $\textit{heuristic call} / \textit{expanded nodes}$.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=.7\linewidth]{./pic/lazy_compute.png}
-  \caption{\small Records from experiments 1,2,3 where $k=1$ produce the plot.}
+  \caption{}
   \label{lazy_compute}
 \end{figure}
 To ignore the side effect when $k>1$, this plot only considers those records with $k=1$.
