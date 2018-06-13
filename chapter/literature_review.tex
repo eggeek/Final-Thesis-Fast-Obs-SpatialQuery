@@ -50,7 +50,7 @@ so we only introduce the classic \textit{R-tree} in this section.
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=.8\linewidth]{pic/mbr.PNG}
+  \includegraphics[width=.8\linewidth]{./pic/mbr.png}
   \caption{\small Both segments, circle and irregular shape can be represented by their MBR}
   \label{mbr}
 \end{figure}
@@ -70,12 +70,12 @@ Figure~\ref{rtree} shows how to store and retrieve objects.
 \begin{figure}[htp]
   \centering
   \begin{subfigure}{.5\textwidth}
-    \includegraphics[width=\linewidth]{pic/hierarchy_mbr.PNG}
+    \includegraphics[width=\linewidth]{./pic/hierarchy_mbr.png}
     \caption{Hierachy of MBRs}
     \label{hmbr}
   \end{subfigure}%
   \begin{subfigure}{.5\textwidth}
-    \includegraphics[width=\linewidth]{pic/rtree.PNG}
+    \includegraphics[width=\linewidth]{./pic/rtree.png}
     \caption{Corresponding tree structure}
     \label{tree}
   \end{subfigure}
@@ -164,7 +164,7 @@ In 2004, Zhang proposed the \textit{Local Visibility Graph} (LVG) algorithm\cite
 to compute obstacle distance.
 Assume obstacles are stored in \textit{R-tree},
 given query point $q$, and a target $t$, the algorithm runs in
-following ways:
+following steps:
 \begin{enumerate}
     \item It starts with a small VG centered on $q$ with radius $r=d_e(q, t)$ (figure~\ref{edbt1});
     \item Then compute shortest path on the current VG (figure~\ref{edbt2});
@@ -385,16 +385,33 @@ quite different, there are three key components:
   containing polygon.  The interval of this successor contains only the target.
   \begin{figure}[ht]
     \centering
-    \includegraphics[width=.6\linewidth]{pic/suc.png}
-    \caption{\small 
-    From \cite{cuicompromise}. We expand the node $([b,x],r)$ which has
-    $([z,g],r)$ and $([f,y],r)$ as observable successors.
-    In addition, the nodes $([c,d],b)$, $([d,e],b)$ and $([e,y],b)$ 
-    are non-observable. All other potential 
-    successors can be safely pruned (more details in~\cite{cuicompromise}).}
+    \begin{tikzpicture}
+      \input{./src/polyanya.tex}
+      \drawmap
+      \fill[lightgray] (e)--(f)--(h)--(g)--(c);
+      \draw[black,very thin, dashed] (q)--($(q)!6cm!(e)$);
+      \draw[black,very thin, dashed] (q)--($(q)!6cm!(c)$);
+      \draw[green, line width=3pt] (j)--(h);
+      \draw[green, line width=3pt] (h)--(g);
+      \draw[green, line width=3pt] (g)--(c);
+      \draw[green, line width=5pt, dashed] (c)--(e);
+      \draw[orange!50, line width=3pt] (j)--(h);
+      \draw[orange!50, line width=3pt] (h)--(g);
+      \draw[orange!50, line width=3pt] (g)--(c);
+      \draw[cyan, line width=3pt] (e)--(f);
+      \draw[cyan, line width=3pt] (f)--(j);
+      \drawVs     
+      \nodelabel{j}{below}
+    \end{tikzpicture}
+    %\includegraphics[width=.6\linewidth]{pic/suc.png}
+    \caption{\small We expand the node $([e,c],q)$ which has
+    $([c,g],q)$ and $[h, j], q$ as observable successors.
+    In addition, the nodes $([e,f],e)$, $([f,j],e)$ are non-observable.
+    All other potential successors can be safely pruned (more details in~\cite{cuicompromise}).}
     \label{suc}
   \end{figure}
 
+\pagebreak
 \item \textbf{Evaluation}: When prioritising nodes for expansion, \textit{Polyanya} makes use of an
   \textit{f-value} estimation function which bounds the length of the optimal path:
   from $q$, throught the current node (i.e. via some $p \in I$) and onto the target. There are
@@ -439,7 +456,7 @@ OkNN in our research.
 To solve this by OkNN, we can let $k$ be infinite and terminate the algorithm when current
 obstacle distance large than $r$.
 
-\item \textbf{Obstacle Reverse k-Nearest Neighbor}(ORkNN): it is proposed by Gao in
+\item \textbf{Obstacle Reverse k-Nearest Neighbor}(ORkNN): it is proposed in
 2011\cite{gao2011efficient} for $k=1$, and be generalized to $k>1$ in
 2016\cite{gao2016reverse}. ORkNN given query point $q$ and $k$, return a set of targets which
 regards $q$ as its OkNN: $\{t | q \in OkNN(t, k)\}$. The query processing has two stages:
@@ -456,9 +473,10 @@ can directly get benefit from the improvement of OkNN.
 \end{itemize}
 
 \section{Summary}
-In this chapter, we review works which related to our research, basically they are in three
-fields: Spatial Index, Spatial Query Processing and AI Pathfinding. The major finding is that,
-in OkNN problem, existing VG based algorithms are hard to improve, so we look for a new
-framework, meanwhile, the new work in AI Pathfinding field shows us a new direction.
-Such finding inspires us to proposed our research problem: an OkNN algorithm on navigation mesh.
-We will discuss more detail about this in chapter~\ref{proposedalgo}.
+In this chapter, we've reviewed works that are related to our research.
+We firstly introduced the background knowledge by discussing$\textit{A}^*$ and
+\textit{Dijkstra}. 
+Then we discussed existing works basically in three fields: Spatial Index, Spatial Query Processing and AI Pathfinding.
+The major finding is that, in OkNN problem, existing VG based algorithms are hard to improve,
+so we are motivated to look for a new framework, meanwhile,
+the new work in AI Pathfinding field shows us a new direction.

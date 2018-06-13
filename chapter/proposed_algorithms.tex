@@ -25,8 +25,7 @@ Given a set of points $T$, a set of obstacles $O$, a distinguished point $q$ and
 \item $h_p(n, t)$ is the \textit{h-value} in Polyanya for a given search node $n$ and a target
   $t$.
 \item $h_v(n)$ is the \textit{h-value} in Interval Heuristic for a given search node $n$.
-\item $h_t(n, R)$ is the \textit{h-value} in Target Heuristic for a given search node $n$ and a
-  $R^*$-tree which stores all targets.
+\item $h_t(n)$ is the \textit{h-value} in Target Heuristic for a given search node $n$.
 \end{itemize}
 \noindent
 Stated in simple words, the objective is to find the set of $k$ targets which are closest to $q$ from among all possible candidates in $T$.
@@ -147,7 +146,8 @@ In such cases more sophisticated spatial reasoning can help to prune the set of 
 neighbours and guide the search. The idea we introduce for such settings can be formalised as
 follows:
 \begin{definition}\label{close}
-  The closest target $t$ of a search node $n$ is $t \in T$ where $h_p(n, t)$ is minimum.
+  The closest target $t$ of a search node $n$ is $t \in T$ where $h_p(n, t)$ is minimum,
+  the \textit{h-value} of target heuristic is $h_t(n)=h_p(n,t)$.
 \end{definition}
 We implement this idea as follow: 
 When the relative location between targets and $r$ are in case 3 of the $h_p$,
@@ -178,9 +178,9 @@ Then following the example, we may reason as follows:
   \item Alternatively, suppose the next nearest target $t$ is instead in $areaC$.
     Then the optimal path must pass through a point $p$ in the open interval $(a, b)$.
     So the minimum $h$-value can be computed by minimising across all target points in $areaC$.
-    A similar argument applies to a next nearest neighbour in $areaC'$ and we can apply a similar strategy,
+    A similar argument applies to a next nearest neighbour in $areaC'$ and we can apply the same strategy,
     but only after mirroring the root point $r$ through the interval.
-    This operation is in contrast to the admissible $f$-value estimate used by Polyanya in the point-to-point setting,
+    This operation is in contrast to the heuristic used by Polyanya in the point-to-point setting,
     which mirrors the target through the interval.
 \end{itemize}
 \noindent
@@ -191,26 +191,25 @@ Thus we may compute a lower-bound estimate to the next nearest neighbour by mini
 four candidates returned by the $R^*$-tree instead of evaluating all possible target points.
 
 \subsection{Further Refinements}
-We may notice that the Target Heuristic described thus far is potentially costly, requiring 
-four NN query as compared to one constant time operation in the point-to-point case.
-To mitigate this we could call the function less often. 
-For example we can assign the nearest-neighbour candidate computed at the parent node to each successor.
-We decide when to switch back to the Target heuristic using the point-to-point estimator:
-if the value is different from parent to child we need to compute a new next nearest neighbour candidate.
-We call this strategy \textit{lazy compute} and apply it throughout our experiments.
-We find it reduces total running time by approximately 20\%.
+We may notice that the Target Heuristic described thus far is potentially costly,
+when compared to one constant time operation in $h_p$.
+To mitigate this we could call $h_t$ less often. 
+An observation is that a parent search node and its successor may use same closest target $t$
+in their $h_t$. In this case, instead of running a new query, the successor can directly
+inherit the $t$ from the parent.  We call this strategy \textit{lazy compute} and apply it throughout our experiments.
+We find it reduces total running time by approximately 15\%.
 
 \begin{lemma}\label{lazy-compute}
   Given search node $n=(I,r)$, its successor $n'=(I', r')$,
   and a target $t$ that minimises Euclidean distance to $n$ from among all possible candidates.
-  Further suppose $h_e$(n, t) = $h_e$(n', t), where $h_e$ is the Polyanya point-to-point estimator.
+  Further suppose $h_p$(n, t) = $h_p$(n', t) .
   Then $t$ is also a target that minimises Euclidean distance to $n'$ among all possible candidates.
 \end{lemma}
 
 \begin{proof}
-  If there is $t'$ closer to $n'$ than $t$, then $h_e(n', t') <
-  h_e(n', t) = h_e(n, t)$, and because of Lemma~\ref{nodesc},
-  $h_e(n, t') <= h_e(n', t')$, so,
+  If there is $t'$ closer to $n'$ than $t$, then $h_p(n', t') <
+  h_p(n', t) = h_p(n, t)$, and because of Lemma~\ref{nodesc},
+  $h_p(n, t') <= h_p(n', t')$, so,
   $t$ can't be the closest target of $n$, which is conflict with assumption. Thus, such $t'$
   doesn't exist.
   %$\square$
@@ -257,7 +256,8 @@ In this chapter, we start with two straightforward adaptions of point-to-point P
 and finally proposed two heuristics for the Polyanya OkNN algorithm.
 For \textit{Interval Heuristic}, it supports multi-target by
 removing $t$ from \textit{h-value}; for \textit{Target Heuristic}, it supports multi-target by
-employing spatial index and computing closest target dynamically. Each heuristic has their
-suitable scenario, in following chapters, we will evaluate their performance under different
-scenarios (chapter~\ref{empirical})  and discuss some future improvements
-(chapter~\ref{conclusionfuture}). 
+employing spatial index and computing closest target dynamically.
+%Each heuristic has their
+%suitable scenario, in following chapters, we will evaluate their performance under different
+%scenarios (chapter~\ref{empirical})  and discuss some future improvements
+%(chapter~\ref{conclusionfuture}). 

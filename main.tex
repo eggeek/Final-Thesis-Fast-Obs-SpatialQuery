@@ -26,6 +26,20 @@
 \usepackage{amsmath}
 \usepackage[linesnumbered,ruled]{algorithm2e}
 
+% list source code
+\usepackage{listings}
+% list style definition
+\lstdefinestyle{customc}{language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  stepnumber=1,
+  showstringspaces=false,
+  tabsize=1,
+  breaklines=true,
+  breakatwhitespace=false,
+  backgroundcolor=\color{black!5}, % set backgroundcolor
+}
+\lstset{escapechar=@,style=customc}
 
 %%Theorem
 \usepackage{amsthm}
@@ -54,7 +68,7 @@
 											 % get into the habit?
 %\thesismonth{July} % Optional. Current month is used if this is not set
 %\thesisyear{2002} % Optional. Current year is used if this is not set
-\thesistitle{Fast Obstacle Spatial Query on Navigation Mesh}
+\thesistitle{Fast Obstacle Spatial Query Processing on Navigation Mesh}
 \thesissupervisor{Assoc. Prof. David Taniar}
 
 \begin{document}
@@ -73,14 +87,10 @@
 \end{thesisabstract}                 
 
 %\thesisdeclarationpage			% generate the declaration page (optional).
-%
-%\begin{thesisacknowledgments}	% generate the acknowledgements page (optional).
-%I would like to thank everyone who helped to make this possible. It has
-%been an incredible journey of self-discovery, and I love every last one of
-%you.
-%
-%I would like to thank my supervisor Dr David Taniar for the guidance and everyone in the Spatial study group. I can not finish it without all your valuable advise.
-%\end{thesisacknowledgments}  
+
+\begin{thesisacknowledgments}	% generate the acknowledgements page (optional).
+  Acknowledgement placeholder 
+\end{thesisacknowledgments}  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -97,5 +107,5 @@
 \pagebreak
 \bibliographystyle{plain}
 \bibliography{refs}
-
+\input{chapter/appendix.tex}
 \end{document}
