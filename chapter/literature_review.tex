@@ -121,7 +121,7 @@ generalized to finding kNN by changes below:
 
 This kind of algorithm is called \textit{branch-and-bound} traversal, which has been well
 studied and widely used in other artificial intelligence areas\cite{sellis1987r+},
-and existing NN queries are based on it with different ordering and pruning strategies,
+and most existing NN queries are based on it with different ordering and pruning strategies,
 more details are in \cite{roussopoulos1995nearest,cheung1998enhanced}.
 
 \section{Obstacle k-Nearest Neighbor}\label{lrknn}
@@ -220,7 +220,7 @@ following steps:
   \caption{\small LVG algorithm}
 \end{figure*}
 
-Since $r>=d_o(q, t)$, when algorithm finish, it guarantees that no obstacle on the current shortest
+When algorithm finish, since $r>=d_o(q, t)$, it guarantees that no obstacle on the current shortest
 path, and thus proving the correctness. This algorithm can be extended to multi-target
 scenario to solve OkNN problem:
 \begin{itemize}
@@ -450,7 +450,7 @@ this in chapter~\ref{proposedalgo}.
 \section{Other Obstacle Spatial Queries}\label{lrquery}
 Obstacle spatial query processing is a broad research area, and many existing works are still
 based on visibility graph, in this section, we review those works which can get benefit from
-OkNN in our research. 
+the OkNN in our research. 
 
 \begin{itemize}
 
@@ -477,9 +477,9 @@ can directly get benefit from the improvement of OkNN.
 
 \section{Summary}
 In this chapter, we've reviewed works that are related to our research.
-We firstly introduced the background knowledge by discussing$\textit{A}^*$ and
+We firstly introduced the background knowledge by discussing $\textit{A}^*$ and
 \textit{Dijkstra}. 
-Then we discussed existing works basically in three fields: Spatial Index, Spatial Query Processing and AI Pathfinding.
+Then we discussed existing works basically from three fields: Spatial Index, Spatial Query Processing and AI Pathfinding.
 The major finding is that, in OkNN problem, existing VG based algorithms are hard to improve,
 so we are motivated to look for a new framework, meanwhile,
 the new work in AI Pathfinding field shows us a new direction.

@@ -22,6 +22,15 @@ We motivate these decisions as follows:
     where other fast point-to-point algorithms were shown to provide state-of-the-art performance in multi-targets scenarios,
     even when compared against dedicated kNN algorithms.
 \end{itemize}
+In both setups, we also include the Polyanya with \textit{zero-heuristic} as another baseline.
+In all plots, the legend of competitors are:
+\begin{itemize}
+  \item \textit{Incremental Local Visibility Graph}\cite{zhang2004spatial}: \textit{LVG}
+  \item \textit{Brute-force Polyanya}: \textit{BF Polyanya}
+  \item \textit{Interval Heuristic}: \textit{OkNN-hv}
+  \item \textit{Target Heuristic}: \textit{OkNN-ht}
+  \item \textit{Zero-heuristic}: \textit{OkNN-h0}
+\end{itemize}
 
 In experiments, we examine performance based on elapsed time and expanded search node.
 For \textit{LVG}, we count the number of expanded node in \textit{Dijkstra}.
@@ -118,7 +127,7 @@ This experiment aims to examine the performance of proposed algorithms in the ea
 Results show that in dense targets scenario, the proposed algorithms outperform \textit{LVG} in both space and time (fig~\ref{e1_dense_time},\ref{e1_dense_gen}).
 
 In the sparse targets scenario, \textit{target heuristic} has the smallest number of node
-operations (fig~\ref{e1_sparse_gen}), 
+expansion (fig~\ref{e1_sparse_gen}), 
 and both \textit{target} and \textit{interval} heuristic are outperformed on runtime by brute-force \textit{Polyanya} (fig~\ref{e1_sparse_time}) as $dist$ increases.
 These results suggest the \textit{interval heuristic} has a large search space, and the
 \textit{target heuristic} has a costly heuristic function. Results also show that \textit{brute-force Polyanya} is
@@ -217,12 +226,12 @@ and we analyze data in following aspects:
 \subsection{Ratio of heuristic cost}
 Figure~\ref{hcost} shows the distribution of ratio:
 $\textit{heuristic cost} / \textit{total cost}$.
-\begin{figure}[htp]
+\begin{figure*}[!htp]
   \centering
-  \includegraphics[width=.7\linewidth]{./pic/hcost.png}
+  \includegraphics[width=.5\linewidth]{./pic/hcost.png}
   \caption{}
   \label{hcost}
-\end{figure}
+\end{figure*}
 The result shows that the $h_t$ cost $\approx 90\%$ of total time, meaning that
 \textit{target heuristic} needs at least an order of magnitude smaller search space 
 to outperform competitors.
@@ -230,24 +239,24 @@ to outperform competitors.
 \subsection{Side effect}
 A known side effect of $h_t$ is the \textit{reassignment} when $k>1$.
 Figure~\ref{lazy_reassign} shows the ratio of $\textit{reassignment} / \textit{expanded nodes}$ when $k$ increase.
-\begin{figure}[htp]
+\begin{figure*}[!htp]
   \centering
-  \includegraphics[width=.7\linewidth]{./pic/lazy_reassign.png}
+  \includegraphics[width=.5\linewidth]{./pic/lazy_reassign.png}
   \caption{}
   \label{lazy_reassign}
-\end{figure}
+\end{figure*}
 The result shows that \textit{reassignment} happens more freqently when $k$
 increase, meaning that \textit{target heuristic} is more suitable when $k$ is small.
 
 \subsection{Ratio of heuristic call}
 Figure~\ref{lazy_compute} shows the distribution of ratio:
 $\textit{heuristic call} / \textit{expanded nodes}$.
-\begin{figure}[htp]
+\begin{figure*}[!htp]
   \centering
-  \includegraphics[width=.7\linewidth]{./pic/lazy_compute.png}
+  \includegraphics[width=.5\linewidth]{./pic/lazy_compute.png}
   \caption{}
   \label{lazy_compute}
-\end{figure}
+\end{figure*}
 To ignore the side effect when $k>1$, this plot only considers those records with $k=1$.
 The plot implies the effect of \textit{lazy compute} can reduce $\approx 15\%$ heuristic call in
 the search.
