@@ -157,10 +157,10 @@ In target heuristic, the $\textit{f-value}$ of successor node is not less than t
   be $t$, and the closest target of $n'$ be $t'$. 
   So we have $\textit{f-value}(n) = \textit{g-value}(r) + h_p(n, t)$, and 
   $\textit{f-value}(n') = g(r) + d_e(r, r') + h_p(n', t')$.
-  According to definition of successor\cite{cuicompromise}, we have $r'=r$ or $r' \in I$.
+  According to definition of successor(section~\ref{lrpoly}), we have $r'=r$ or $r' \in I$.
   There are two cases:
   \begin{itemize}
-    \item If $t=t'$, according to definition of $h_p$\cite{cuicompromise},
+    \item If $t=t'$, according to definition of $h_p$ (section~\ref{lrpoly}),
       we have $d_e(r, r') + h_p(n', t) >= h_p(n, t)$. 
     \item If $t,t'$ are different, according to definition~\ref{close},
       $h_p(n, t) <= h_p(n, t') <= d_e(r, r') + h_p(n', t')$.
@@ -221,13 +221,13 @@ We find it reduces total number of node expansion by approximately 15\%.
 \begin{corollary}\label{lazy-compute}
   Given search node $n=(I,r)$, its successor $n'=(I', r')$,
   and a target $t$ which is the closest target of $n$ among all possible candidates.
-  Further suppose $\textit{f-value}(n)=\textit{f-value}(n')$ .
+  Further suppose $\textit{f-value}(n)=\textit{f-value}(n')$.
   Then $t$ is also the closest target of $n'$ among all possible candidates.
 \end{corollary}
 
 \begin{proof}
-  If there is $t'$ closer to $n'$ than $t$, then $h_p(n', t') <
-  h_p(n', t) = h_p(n, t)$, then 
+  If there is a $t'$ such that $h_p(n', t') < h_p(n', t) = h_p(n, t)$,
+  then 
   $$
   \textit{g-value}(r) + d_e(r, r') + h_p(n', t') < \textit{g-value}(r) + d_e(r, r') + h_p(n',
   t) = \textit{f-value}(n)
