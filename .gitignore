@@ -14,5 +14,7 @@
 *.lof
 *.log
 *.lot
-*.pdf
-!final.pdf
+*.fdb_latexmk
+*.fls
+final.pdf
+main.pdf
